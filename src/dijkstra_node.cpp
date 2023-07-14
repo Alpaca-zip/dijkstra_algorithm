@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-#include "utility.h"
+#include "dijkstra_node.hpp"
 
 void DijkstraNode::userInput()
 {
@@ -49,35 +49,40 @@ void DijkstraNode::userInput()
 
 void DijkstraNode::solveDijkstra()
 {
-  std::vector<int> dist(_num_nodes, INT_MAX);
-  std::vector<bool> shortestPathNodes(_num_nodes, false);
-  dist[_src_node] = 0;
+  std::vector<int> distance(_num_nodes, INT_MAX);
+  std::vector<bool> shortest_path_nodes(_num_nodes, false);
+  distance[_src_node] = 0;
 
-  int u;
-  while ((u = minDistance(dist, shortestPathNodes)) != -1) {
-    shortestPathNodes[u] = true;
-    for (int v = 0; v < _num_nodes; v++) {
-      if (!shortestPathNodes[v] && _graph_matrix[u][v] && dist[u] + _graph_matrix[u][v] < dist[v]) {
-        dist[v] = dist[u] + _graph_matrix[u][v];
-      }
-    }
+  int min_dist_index;
+  while ((min_dist_index = minDistance(distance, shortest_path_nodes)) != -1) {
+    shortest_path_nodes[min_dist_index] = true;
+    updateDistance(min_dist_index, distance, shortest_path_nodes);
   }
-  printResult(dist);
+  printResult(distance);
 }
 
-int DijkstraNode::minDistance(
-  const std::vector<int> & dist, const std::vector<bool> & shortestPathNodes)
+int DijkstraNode::minDistance(const std::vector<int> & dist, const std::vector<bool> & nodes)
 {
   int min = INT_MAX;
   int min_index = -1;
 
   for (int v = 0; v < _num_nodes; v++) {
-    if (!shortestPathNodes[v] && dist[v] <= min) {
+    if (!nodes[v] && dist[v] <= min) {
       min = dist[v], min_index = v;
     }
   }
 
   return min_index;
+}
+
+void DijkstraNode::updateDistance(
+  const int index, std::vector<int> & dist, const std::vector<bool> & nodes)
+{
+  for (int v = 0; v < _num_nodes; v++) {
+    if (!nodes[v] && _graph_matrix[index][v] && dist[index] + _graph_matrix[index][v] < dist[v]) {
+      dist[v] = dist[index] + _graph_matrix[index][v];
+    }
+  }
 }
 
 void DijkstraNode::printResult(const std::vector<int> & dist)

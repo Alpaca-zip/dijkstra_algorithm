@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(dijkstra)
+
 find_package(Boost REQUIRED COMPONENTS graph)
+
+# Setting the include paths
 include_directories(${Boost_INCLUDE_DIRS})
-add_executable(dijkstra dijkstra_node.cpp)
+include_directories(include)  # Adding the path to the directory containing the header files
+
+# Setting up the executable
+add_executable(dijkstra src/dijkstra_node.cpp)  # Updating the path to the directory containing the source code
+
+# Linking the libraries
 target_link_libraries(dijkstra ${Boost_LIBRARIES})
