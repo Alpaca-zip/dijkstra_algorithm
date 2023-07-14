@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(dijkstra)
+find_package(Boost REQUIRED COMPONENTS graph)
+include_directories(${Boost_INCLUDE_DIRS})
+add_executable(dijkstra dijkstra_node.cpp)
+target_link_libraries(dijkstra ${Boost_LIBRARIES})
