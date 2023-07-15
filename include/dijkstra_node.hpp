@@ -35,7 +35,6 @@ public:
   void userInput();
   void solveDijkstra();
   void saveResult(const std::vector<int> & dist);
-  void updateDistance(
-    const int index, std::vector<int> & dist, const std::vector<bool> & nodes);
+  void updateDistance(const int index, std::vector<int> & dist, const std::vector<bool> & nodes);
   int minDistance(const std::vector<int> & dist, const std::vector<bool> & nodes);
 };

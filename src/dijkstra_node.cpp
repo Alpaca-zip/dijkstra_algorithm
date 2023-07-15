@@ -45,14 +45,15 @@ void DijkstraNode::userInput()
       std::cin >> src >> dst >> weight;
 
       if (src < 0 || src >= _num_nodes || dst < 0 || dst >= _num_nodes || weight < 0) {
-        throw std::invalid_argument("Invalid edge details. 'source' and 'destination' should be within the range of existing nodes, and 'weight' must not be negative.");
+        throw std::invalid_argument(
+          "Invalid edge details. 'source' and 'destination' should be within the range of existing "
+          "nodes, and 'weight' must not be negative.");
       }
 
       _graph_matrix[src][dst] = weight;
       _graph_matrix[dst][src] = weight;
     }
-  }
-  catch(const std::invalid_argument& e) {
+  } catch (const std::invalid_argument & e) {
     std::cerr << e.what() << std::endl;
     std::exit(EXIT_FAILURE);
   }
@@ -90,7 +91,9 @@ void DijkstraNode::updateDistance(
   const int index, std::vector<int> & dist, const std::vector<bool> & nodes)
 {
   for (int v = 0; v < _num_nodes; v++) {
-    if (!nodes[v] && _graph_matrix[index][v] != -1 && dist[index] + _graph_matrix[index][v] < dist[v]) {
+    if (
+      !nodes[v] && _graph_matrix[index][v] != -1 &&
+      dist[index] + _graph_matrix[index][v] < dist[v]) {
       dist[v] = dist[index] + _graph_matrix[index][v];
     }
   }
