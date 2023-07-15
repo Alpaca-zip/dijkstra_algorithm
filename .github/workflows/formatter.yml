@@ -1,4 +1,4 @@
-name: formatter
+name: Formatter
 
 on:
   pull_request:
@@ -6,9 +6,6 @@ on:
 jobs:
   formatter:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.10.6]
     steps:
       - name: checkout
         uses: actions/checkout@v2
