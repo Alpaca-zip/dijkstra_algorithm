@@ -5,10 +5,10 @@ find_package(Boost REQUIRED COMPONENTS graph)
 
 # Setting the include paths
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(include)  # Adding the path to the directory containing the header files
+include_directories(include)
 
 # Setting up the executable
-add_executable(dijkstra src/dijkstra_node.cpp)  # Updating the path to the directory containing the source code
+add_executable(dijkstra src/dijkstra_node.cpp)
 
 # Linking the libraries
 target_link_libraries(dijkstra ${Boost_LIBRARIES})

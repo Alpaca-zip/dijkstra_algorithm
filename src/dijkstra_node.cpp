@@ -20,30 +20,41 @@ void DijkstraNode::userInput()
 {
   int src, dst, weight, num_edges;
 
-  std::cout << "Enter the number of nodes: ";
-  std::cin >> _num_nodes;
-  _graph_matrix.resize(_num_nodes, std::vector<int>(_num_nodes, 0));
+  try {
+    std::cout << "Enter the number of nodes: ";
+    std::cin >> _num_nodes;
+    if (_num_nodes < 0) {
+      throw std::invalid_argument("Number of nodes must not be negative.");
+    }
+    _graph_matrix.resize(_num_nodes, std::vector<int>(_num_nodes, -1));
 
-  std::cout << "Enter the number of edges: ";
-  std::cin >> num_edges;
-
-  std::cout << "Enter the source of node: ";
-  std::cin >> _src_node;
-
-  for (int i = 0; i < num_edges; i++) {
-    std::cout << "Enter edge " << i + 1 << " (source, destination, weight): ";
-    std::cin >> src >> dst >> weight;
-
-    while (src < 0 || src >= _num_nodes || dst < 0 || dst >= _num_nodes) {
-      std::cout << "Invalid source or destination node. Please enter nodes in "
-                   "range 0 to "
-                << _num_nodes - 1 << "\n";
-      std::cout << "Enter edge " << i + 1 << " (source, destination, weight): ";
-      std::cin >> src >> dst >> weight;
+    std::cout << "Enter the number of edges: ";
+    std::cin >> num_edges;
+    if (num_edges < 0) {
+      throw std::invalid_argument("Number of edges must not be negative.");
     }
 
-    _graph_matrix[src][dst] = weight;
-    _graph_matrix[dst][src] = weight;
+    std::cout << "Enter the source of node: ";
+    std::cin >> _src_node;
+    if (_src_node < 0 || _src_node >= _num_nodes) {
+      throw std::invalid_argument("Source node must be within the range of existing nodes.");
+    }
+
+    for (int i = 0; i < num_edges; i++) {
+      std::cout << "Enter edge " << i + 1 << " (source, destination, weight): ";
+      std::cin >> src >> dst >> weight;
+
+      if (src < 0 || src >= _num_nodes || dst < 0 || dst >= _num_nodes || weight < 0) {
+        throw std::invalid_argument("Invalid edge details. 'source' and 'destination' should be within the range of existing nodes, and 'weight' must not be negative.");
+      }
+
+      _graph_matrix[src][dst] = weight;
+      _graph_matrix[dst][src] = weight;
+    }
+  }
+  catch(const std::invalid_argument& e) {
+    std::cerr << e.what() << std::endl;
+    std::exit(EXIT_FAILURE);
   }
 }
 
@@ -58,7 +69,7 @@ void DijkstraNode::solveDijkstra()
     shortest_path_nodes[min_dist_index] = true;
     updateDistance(min_dist_index, distance, shortest_path_nodes);
   }
-  printResult(distance);
+  saveResult(distance);
 }
 
 int DijkstraNode::minDistance(const std::vector<int> & dist, const std::vector<bool> & nodes)
@@ -79,13 +90,13 @@ void DijkstraNode::updateDistance(
   const int index, std::vector<int> & dist, const std::vector<bool> & nodes)
 {
   for (int v = 0; v < _num_nodes; v++) {
-    if (!nodes[v] && _graph_matrix[index][v] && dist[index] + _graph_matrix[index][v] < dist[v]) {
+    if (!nodes[v] && _graph_matrix[index][v] != -1 && dist[index] + _graph_matrix[index][v] < dist[v]) {
       dist[v] = dist[index] + _graph_matrix[index][v];
     }
   }
 }
 
-void DijkstraNode::printResult(const std::vector<int> & dist)
+void DijkstraNode::saveResult(const std::vector<int> & dist)
 {
   std::cout << "========== RESULT ==========\n";
   std::cout << "Node \t Distance from Source\n";
@@ -100,7 +111,7 @@ void DijkstraNode::printResult(const std::vector<int> & dist)
   for (int i = 0; i < _num_nodes; ++i) {
     node_labels[i] = std::to_string(i) + " (Dist: " + std::to_string(dist[i]) + ")";
     for (int j = i + 1; j < _num_nodes; ++j) {
-      if (_graph_matrix[i][j] != 0) {
+      if (_graph_matrix[i][j] != -1) {
         auto e = add_edge(i, j, _graph_matrix[i][j], g).first;
         edge_labels[e] = std::to_string(_graph_matrix[i][j]);
       }
