@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - name: Install Boost
+      run: sudo apt-get install -y libboost-all-dev
     - name: Create Build Environment
       run: cmake -S . -B build
     - name: Build
