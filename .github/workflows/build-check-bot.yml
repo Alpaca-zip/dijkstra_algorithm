@@ -1,4 +1,4 @@
-name: Build Check Bot
+name: Ubuntu-latest Build Check
 
 on:
   push:
