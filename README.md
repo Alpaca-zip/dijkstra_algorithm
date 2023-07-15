@@ -1,4 +1,4 @@
-# dijkstra_algorithm [![Build Check Bot](https://github.com/Alpaca-zip/dijkstra_algorithm/actions/workflows/build-check-bot.yml/badge.svg)](https://github.com/Alpaca-zip/dijkstra_algorithm/actions/workflows/build-check-bot.yml)
+# dijkstra_algorithm [![Ubuntu-latest Build Check](https://github.com/Alpaca-zip/dijkstra_algorithm/actions/workflows/build-check-bot.yml/badge.svg?event=push)](https://github.com/Alpaca-zip/dijkstra_algorithm/actions/workflows/build-check-bot.yml)
 This repository contains an implementation of Dijkstra's Algorithm in C++.
 
 ## How to Use
