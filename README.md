@@ -9,7 +9,7 @@ $ git clone https://github.com/Alpaca-zip/dijkstra_algorithm.git
 ```
 ### 2. Compile the program using a C++ compiler.
 ```
-$ build.sh
+$ bash build.sh
 ```
 ### 3. Run the program. 
 You will be prompted to input the number of nodes, the number of edges, and the source node. For each edge, you should specify the source node, the destination node, and the weight of the edge.
