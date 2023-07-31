@@ -15,7 +15,7 @@ $ bash build.sh
 You will be prompted to input the number of nodes, the number of edges, and the source node. For each edge, you should specify the source node, the destination node, and the weight of the edge.
 The program will calculate and print the shortest distance from the source node to all other nodes.
 ```
-$ run.sh
+$ bash run.sh
 Enter the number of nodes: 5
 Enter the number of edges: 7
 Enter the source of node: 0
