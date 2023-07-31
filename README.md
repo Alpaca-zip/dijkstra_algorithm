@@ -7,8 +7,9 @@ This repository contains an implementation of Dijkstra's Algorithm in C++.
 ```
 $ git clone https://github.com/Alpaca-zip/dijkstra_algorithm.git
 ```
-### 2. Compile the program using a C++ compiler.
+### 2. Install dependencies and compile the program.
 ```
+$ sudo apt-get install -y libboost-all-dev
 $ bash build.sh
 ```
 ### 3. Run the program. 
